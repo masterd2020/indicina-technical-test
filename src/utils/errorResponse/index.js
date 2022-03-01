@@ -89,4 +89,21 @@ class BadRequestError extends ResponseError {
   }
 }
 
-module.exports = {NotFoundError, BadRequestError, ResponseError}
+
+/**
+ * @class InternalError
+ * @classdesc this error class should be thrown when a server error occurs within the API, its subclasses the
+ * abstract @see ResponseError class and calls its constructor using the @see ERROR_TYPE_ENUM const and the message
+ * to be displayed.
+ */
+class InternalError extends ResponseError {
+  constructor(
+    message = 'An error occurred. Please try again later',
+    errorDetails = null
+  ) {
+    super(ERROR_TYPE_ENUM.INTERNAL, message, errorDetails);
+  }
+}
+
+
+module.exports = {NotFoundError, BadRequestError, ResponseError, InternalError}
