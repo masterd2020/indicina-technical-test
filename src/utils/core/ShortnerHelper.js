@@ -3,7 +3,10 @@ const ShortnerAlgorithm = require('./ShortnerAlgorithm')
 /**
  * In memory db
  */
-let db = []
+let db = {
+  stats: [],
+  urls: [],
+}
 
 /**
  * @class ShortnerHelper
@@ -18,7 +21,7 @@ class ShortnerHelper {
    * @return
    */
   static saveToDB(ID, url) {
-    db = [...db, {id: ID, longURL: url, createdAt: new Date()}]
+    db.urls = [...db.urls, {id: ID, longURL: url, createdAt: new Date()}]
   }
   
   /**
@@ -28,7 +31,7 @@ class ShortnerHelper {
    * @returns 
    */
   static isURLExist(ID, url) {
-    const urlExist = db.find((data) => data.longURL === url);
+    const urlExist = db.urls.find((data) => data.longURL === url);
 
     if(urlExist) {
       const encode = new ShortnerAlgorithm().encodeToBase64(urlExist.id)
@@ -47,8 +50,9 @@ class ShortnerHelper {
    */
   static retrieveOriginalURL(id) {
     const decode = new ShortnerAlgorithm().decodeToBase10(id)
+    const urlExist = db.urls.find((data) => data.id === decode);
 
-    return db.find((data) => data.id === decode) ? db.find((data) => data.id === decode).longURL : null;
+    return  urlExist ? urlExist.longURL : null;
   }
 }
 
