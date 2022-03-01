@@ -29,9 +29,11 @@ class Shortner {
    * @returns string
    */
   static decode(req) {
-    const decode = new ShortnerAlgorithm().decodeToBase10('hi233zd')
-    console.log(decode)
-    return 'Decode'
+    const {id} = req.body;
+
+    const originalURL = ShortnerHelper.retrieveOriginalURL(id);
+    
+    return originalURL
   }
 
   /**

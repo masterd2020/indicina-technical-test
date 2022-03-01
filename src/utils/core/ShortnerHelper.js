@@ -39,6 +39,17 @@ class ShortnerHelper {
       return encode;
     }
   } 
+
+  /**
+   * @description This static method decode the id given and return the original url
+   * @param {String} id 
+   * @returns {String}s
+   */
+  static retrieveOriginalURL(id) {
+    const decode = new ShortnerAlgorithm().decodeToBase10(id)
+
+    return db.find((data) => data.id === decode) ? db.find((data) => data.id === decode).longURL : null;
+  }
 }
 
 module.exports = ShortnerHelper;
