@@ -42,7 +42,11 @@ class Shortner {
    * @returns string
    */
   static statistic(req) {
-    return 'Statistics'
+    const {url_path} = req.params;
+
+    const hits = ShortnerHelper.statistic(url_path);
+
+    return {url_path, hits};
   }
 
 }

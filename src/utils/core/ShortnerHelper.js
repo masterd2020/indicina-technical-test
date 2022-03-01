@@ -21,11 +21,18 @@ class ShortnerHelper {
    * @return
    */
   static saveToDB(ID, url) {
-    db.urls = [...db.urls, {id: ID, longURL: url, createdAt: new Date()}]
+    db.urls = [...db.urls, {id: ID, longURL: url, hits: 1, createdAt: new Date()}]
+  }
+
+  static incrementURLHits(ID, url) {
+    const urlExist = db.urls.find((data) => data.longURL === url);
+
+    db.urls = [...db.urls, {...urlExist, hits: urlExist.hits++}]
   }
   
   /**
    * @description This method check to see if there is any duplicate entry of the url in the in memory db
+   * based on that certain operations are carried out
    * @param {Number} ID 
    * @param {String} url 
    * @returns 
@@ -35,6 +42,8 @@ class ShortnerHelper {
 
     if(urlExist) {
       const encode = new ShortnerAlgorithm().encodeToBase64(urlExist.id)
+      this.incrementURLHits(ID, url)
+      
       return encode;
     } else {
       const encode = new ShortnerAlgorithm().encodeToBase64(ID)
@@ -51,8 +60,20 @@ class ShortnerHelper {
   static retrieveOriginalURL(id) {
     const decode = new ShortnerAlgorithm().decodeToBase10(id)
     const urlExist = db.urls.find((data) => data.id === decode);
-
+    
     return  urlExist ? urlExist.longURL : null;
+  }
+  
+  /**
+   *  @description This statistic method return the hits for a particular urlPath pass to the method
+   * @param {String} urlPath 
+   * @returns {String}
+   */
+  static statistic(urlPath) {
+    const decode = new ShortnerAlgorithm().decodeToBase10(urlPath)
+    const urlExist = db.urls.find((data) => data.id === decode);
+    
+    return  urlExist ? urlExist.hits : null;
   }
 }
 
