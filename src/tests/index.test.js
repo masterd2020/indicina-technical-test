@@ -3,14 +3,14 @@ const app = require('../../server')
 
 describe('Encode endpoint', () => {
   it('Should encode the URL given', async () => {
-    const res = await request(app).post('/api/v1/shortner/encode')
+    const res = await request(app).post('/api/v1/shortner/encode').send({url: 'https://indicina.com'})
     expect(res.statusCode).toEqual(200)
   })
 })
 
 describe('Decode endpoint', () => {
   it('Should decode the URL given, to it is original url', async () => {
-    const res = await request(app).post('/api/v1/shortner/decode')
+    const res = await request(app).post('/api/v1/shortner/decode').send({id: 'A'})
     expect(res.statusCode).toEqual(200)
   })
 })
