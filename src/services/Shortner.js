@@ -1,3 +1,6 @@
+let {ID} = require('../CONSTANTS/shortner')
+const ShortnerAlgorithm = require('../utils/core/ShortnerAlgorithm');
+const ShortnerHelper = require('../utils/core/ShortnerHelper');
 
 /**
  * @class Shortner Service
@@ -10,15 +13,24 @@ class Shortner {
    * @returns string
    */
   static encode(req) {
-    return 'Encode'
-  }
+    const {url} = req.body;
+    
+    const encode = ShortnerHelper.isURLExist(ID, url);
+    
+    // Increment the global ID
+    ID++
 
+    return `${req.get('host')}/${encode}`
+  }
+  
   /**
    * @description A static method to handle decoding of URL
    * @param {Object} req - Express HTTP request object
    * @returns string
    */
   static decode(req) {
+    const decode = new ShortnerAlgorithm().decodeToBase10('hi233zd')
+    console.log(decode)
     return 'Decode'
   }
 
