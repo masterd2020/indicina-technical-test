@@ -24,7 +24,11 @@ class ShortnerHelper {
     db.urls = [...db.urls, {id: ID, longURL: url, hits: 1, createdAt: new Date()}]
   }
 
-  static incrementURLHits(ID, url) {
+  /**
+   * @description This static method increment the hits of the url provided
+   * @param {String} url 
+   */
+  static incrementURLHits(url) {
     const urlExist = db.urls.find((data) => data.longURL === url);
 
     db.urls = [...db.urls, {...urlExist, hits: urlExist.hits++}]

@@ -11,6 +11,7 @@ const apiRoutes = require('./src/routes')
  * Import
  */
 const {NotFoundError, ResponseError, InternalError} = require('./src/utils/errorResponse')
+const ShortnerHelper = require('./src/utils/core/ShortnerHelper');
 
 /**
  * Setup middleware
@@ -23,7 +24,23 @@ app.use(helmet())
 /**
  * Mounts routes
  */
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to URL Shortner',
+    version: '1.0.0',
+    author: 'tohebayomide11@gmail.com'
+  })
+})
 app.use('/api/v1', apiRoutes)
+app.get('/:id', (req, res) => {
+  const {id} = req.params;
+
+  const originalURL = ShortnerHelper.retrieveOriginalURL(id);
+
+  if(originalURL) res.redirect(originalURL);
+  else res.redirect('/')
+})
 
 /**
  * Express global error handling middleware
