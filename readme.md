@@ -6,6 +6,10 @@
 2. After successfully cloning the repository, navigate into the `indicina` folder, then run `npm install` to install all the dependencies
 3. In your command line, type `npm start` to start the node server.
 
+## Running Test
+
+1. You can run test by typing `npm test` in your command line, make sure you are in the indicina directory
+
 ## Testing the Endpoints
 
 ### 1. Encoding the URL
